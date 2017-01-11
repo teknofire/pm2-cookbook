@@ -1,0 +1,7 @@
+name 'node_pm2'
+maintainer 'UAF GINA'
+maintainer_email 'support+chef@gina.alaska.edu'
+license 'mit'
+description 'Installs/Configures node_pm2'
+long_description 'Installs/Configures node_pm2'
+version '0.1.0'
