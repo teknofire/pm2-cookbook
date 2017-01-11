@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: node_pm2
+# Cookbook Name:: pm2_test
 # Recipe:: default
 #
 # The MIT License (MIT)
@@ -24,17 +24,15 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-# TODO: Remove when nodejs cookbook fixes issue with Ubuntu 16 systems
-# https://github.com/redguide/nodejs/issues/151
-if node['platform_family'] == 'debian'
-  if node['platform_version'].to_i == 16
-    node.default['nodejs']['packages'] = ['nodejs', 'nodejs-legacy', 'npm']
-  end
+include_recipe 'node_pm2::default'
+
+directory '/opt/app'
+
+cookbook_file '/opt/app/test.js' do
+  source 'test.js'
 end
 
-include_recipe 'build-essential::default'
-include_recipe 'nodejs'
-
-nodejs_npm 'pm2' do
-  version node['pm2']['version'] if node['pm2']['version']
+pm2_service 'test' do
+  config script: 'test.js', cwd: '/opt/app'
+  action [:create, :enable, :start]
 end

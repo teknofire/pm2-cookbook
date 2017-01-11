@@ -1,9 +1,8 @@
-require 'spec_helper'
+describe service('pm2') do
+  it { should be_enabled }
+  it { should be_running }
+end
 
-describe 'node_pm2::default' do
-  # Serverspec examples can be found at
-  # http://serverspec.org/resource_types.html
-  it 'does something' do
-    skip 'Replace this with meaningful tests'
-  end
+describe port(8080) do
+  it { should be_listening }
 end
