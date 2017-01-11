@@ -3,6 +3,6 @@ describe service('pm2') do
   it { should be_running }
 end
 
-describe port(8080) do
+describe port(3000) do
   it { should be_listening }
 end

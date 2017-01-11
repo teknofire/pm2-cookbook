@@ -24,14 +24,6 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-# TODO: Remove when nodejs cookbook fixes issue with Ubuntu 16 systems
-# https://github.com/redguide/nodejs/issues/151
-if node['platform_family'] == 'debian'
-  if node['platform_version'].to_i == 16
-    node.default['nodejs']['packages'] = ['nodejs', 'nodejs-legacy', 'npm']
-  end
-end
-
 include_recipe 'build-essential::default'
 include_recipe 'nodejs'
 
