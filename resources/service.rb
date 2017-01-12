@@ -1,3 +1,5 @@
+require 'json'
+
 resource_name :pm2_service
 
 property :user, String, default: 'root'
@@ -28,7 +30,6 @@ action :create do
     cookbook new_resource.template_cookbook
     variables(config: new_resource.config)
     mode '0644'
-    backup false
   end
 end
 
@@ -43,6 +44,7 @@ action :start do
     command cmd
     environment pm2_env
     notifies :save, "pm2_service[#{new_resource.name}]"
+    not_if { service_online? }
   end
 end
 
@@ -52,7 +54,7 @@ action :stop do
     command cmd
     environment pm2_env
     notifies :save, "pm2_service[#{new_resource.name}]", :immediately
-    only_if { service_available? }
+    only_if { service_online? }
   end
 end
 
@@ -69,7 +71,7 @@ action :graceful_reload do
   execute cmd do
     command cmd
     environment pm2_env
-    only_if { service_available? }
+    only_if { service_online? }
   end
 end
 
@@ -105,9 +107,8 @@ action_class do
   def service_online?
     cmd = shell_out!('pm2 list',
                      user: new_resource.user,
-                     returns: 0,
                      environment: pm2_env)
-    !cmd.stdout.match(new_resource.name).nil?
+    !cmd.stdout.match("#{new_resource.name}\s+|\s\w+\s|\s\w+\s|\s\w+\s|\sonline").nil?
   end
 
   def service_config

@@ -34,5 +34,5 @@ end
 
 pm2_service 'test' do
   config script: 'test.js', cwd: '/opt/app'
-  action [:create, :enable, :start]
+  action [:enable, :start]
 end
