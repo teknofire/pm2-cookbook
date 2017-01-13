@@ -46,3 +46,14 @@ Installs nodejs, npm and pm2.  If you already have these dependencies in place t
 ### pm2_service
 
 Used to setup and control any nodejs services using pm2
+
+#### actions
+
+* :create
+* :enable
+* :start
+* :stop
+* :reload
+* :restart
+* :start_or_restart
+* :start_or_reload
