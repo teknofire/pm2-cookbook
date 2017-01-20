@@ -25,12 +25,12 @@ action :create do
     action :create
   end
 
-  desired_config = new_resource.config.merge({name: new_resource.name})
+  desired_config = new_resource.config.merge({ name: new_resource.name })
 
   template service_config do
     source 'service.json.erb'
     cookbook new_resource.template_cookbook
-    variables(desired_config)
+    variables(config: desired_config)
     mode '0644'
   end
 end
