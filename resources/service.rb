@@ -25,7 +25,7 @@ action :create do
     action :create
   end
 
-  desired_config = new_resource.config.merge({ name: new_resource.name })
+  desired_config = new_resource.config.merge(name: new_resource.name)
 
   template service_config do
     source 'service.json.erb'
