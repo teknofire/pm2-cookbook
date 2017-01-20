@@ -32,7 +32,7 @@ cookbook_file '/opt/app/test.js' do
   source 'test.js'
 end
 
-pm2_service 'test' do
+pm2_service 'testing' do
   config script: 'test.js', cwd: '/opt/app'
   action [:enable, :start]
 end
